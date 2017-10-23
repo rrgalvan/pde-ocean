@@ -102,7 +102,7 @@
 % % \DeclareDocumentCommand{\PlayVideoWithLabel}{%
 % %   O{0.5\linewidth} O{1.0}  O{} m }{\PlayVideoWithLabelNOAutostart[#1][#2][#3]{#4}}
 
-\usepackage{numerical-oceanography}
+\usepackage{JRRG-pde-ocean}
 
 \newtheorem{remark}{Remark}
 \newtheorem{proposition}{Proposition}
@@ -240,7 +240,7 @@
 
 \begin{sectionframe}
 \end{sectionframe}
-\include{sec-intro}
+% \include{sec-intro}
 
 %%,---------------------------------------------------------------------
 %%| Ocean Models
@@ -251,56 +251,6 @@
 \begin{sectionframe}
 \end{sectionframe}
 \include{sec-ocean-models}
-
-%%,---------------------------------------------------------------------
-%%| Stokes Hydrostatic Stable FE combinations}
-%%`---------------------------------------------------------------------
-\section{New Stokes FE which are Hydrostatic--Stable}
-\label{sec:hydr-stable-fe}
-\begin{sectionframe}
-\end{sectionframe}
-\include{sec-paper1}
-
-
-%%,---------------------------------------------------------------------
-%%| Hydrostatic Stable FE combinations}
-%%`---------------------------------------------------------------------
-\section{Hydrostatic Finite Elements}
-\label{sec:hydr-stable-fe}
-\begin{sectionframe}
-  \begin{itemize}
-  \item Gathering previous theory
-  \item First successful numerical simulations for \hydStokes
-  \end{itemize}
-\end{sectionframe}
-\include{sec-paper2}
-
-%%,---------------------------------------------------------------------
-%%|
-%%`---------------------------------------------------------------------
-\section{Stabilized Reformulations of Hydrostatic Stokes}
-\label{sec:stab-reform-hydr}
-\begin{sectionframe}
-  \begin{itemize}
-  \item A reformulation of \hydStokes where \ISv is not needed
-  \item Some ``realistic'' simulations
-  \end{itemize}
-\end{sectionframe}
-\include{sec-paper3}
-
-%%,---------------------------------------------------------------------
-%%| Time schemes and variable denisity
-%%`---------------------------------------------------------------------
-\section{Work in progress}
-\label{sec:time-integr-whole}
-\begin{sectionframe}
-  \begin{itemize}
-  \item Evolution schemes with variable density
-  \item Time-splitting schemes for the Hydrostatic model
-  \item Discontinuous Finite Elements for Hydrostatic equations
-  \end{itemize}
-\end{sectionframe}
-\include{sec-work-in-progress}
 
 
 %%,---------------------------------------------------------------------
