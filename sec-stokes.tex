@@ -1,0 +1,61 @@
+
+\begin{frame}{Navier-Stokes Equations}
+%----------------------------------------------------------------------
+  They describe the motion of \textbf{viscous fluids}
+  \llaveizq{Velocity, $\uu=(u_1,u_2,u_3)$, \\ pressure $p$.}
+  \begin{itemize}\itemsep0.9em
+  \item Resulting from
+    \begin{itemize}
+    \item Newton's second law {\scriptsize\color{PHDgray} (applied to fluid motion)}
+    \item {\scriptsize\color{PHDgray} Assumption that} [stress forces] = [viscous forces] + [pressure forces]
+    \end{itemize}
+  \end{itemize}
+\alt<1>{ %<<<<<<<<<<<<<<<<<<1
+      \begin{block}{Equations in a domain $\Omega\subset\Rset^3$:}
+        \vspace{-1em}
+        \begin{align*}
+          \text{\tiny Horiz. $x$--momentum}\quad \dt u_1 + (u_1\dx + u_2\dy  + u_3 \dz) u_1 - \nu\Delta u_1 + \dx p &= f_1, \\
+          \text{\tiny Horiz. $y$--momentum}\quad\dt u_2 + (u_1\dx + u_2\dy  + u_3 \dz) u_2 - \nu\Delta u_2 + \dy p &= f_2, \\
+          \text{\tiny Vertical momentum}\quad\dt u_3 + (u_1\dx + u_2\dy  + u_3 \dz) u_3 - \nu\Delta u_3 + \dz p &= f_3, \\
+          \text{\tiny Continuity}\hspace{24ex} \dx u_1 + \dy u_2 + \dz u_3 &= 0
+        \end{align*}
+      \end{block}
+    }
+    { %<<<<<<<<<<<<<<<<<<2
+      \begin{block}
+      {Equations in a domain $\Omega\subset\Rset^3$ (\textbf{vector notation}):}
+        \vspace{-1em}
+        \begin{align*}
+          \text{\tiny Momentum}\quad \dt \uu + (\uu\cdot\grad) \uu - \framedmath<4>{\nu}\Delta \uu + \grad\pp &= \ff, \\
+          \text{\tiny Continuity}\hspace{21ex} \div\uu &= 0,
+        \end{align*}
+      \end{block}
+    }
+    \small
+    \begin{itemize}
+    \item<3> \alert{Boundary conditions} on $\partial\Omega$
+      (e.g. $\uu=(u_1,u_2,u_3)|_{\partial\Omega}=0$)
+      \par And initial condition $\uu=\uu_0$.
+    \item<3> \alert{Hard problem} (wide range of
+      length scales, turbulence, non-lineality...). Millenium Prize
+      Problem (existence and smoothness).
+    \item<4> Easier if motion is slow so that \textbf{diffusion},
+      $\framedmath<4>{\nu}$, dominates (eg $Re=uL/\nu\ \tilde 1$)...
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Stokes Equations}
+%----------------------------------------------------------------------
+  They describe the motion of \textbf{viscous fluids}
+  \llaveizq{Velocity, $\uu=(u_1,u_2,u_3)$, \\ pressure $p$.}
+  \begin{itemize}\itemsep0.9em
+  \item
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% coding: utf-8
+%%% TeX-master: "JRRG-pde-ocean"
+%%% mode: latex
+%%% ispell-local-dictionary: "english"
+%%% End:
