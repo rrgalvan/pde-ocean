@@ -1,57 +1,209 @@
 
 \begin{frame}{Navier-Stokes Equations}
-%----------------------------------------------------------------------
+  % ----------------------------------------------------------------------
+  \medskip
   They describe the motion of \textbf{viscous fluids}
   \llaveizq{Velocity, $\uu=(u_1,u_2,u_3)$, \\ pressure $p$.}
-  \begin{itemize}\itemsep0.9em
-  \item Resulting from
-    \begin{itemize}
-    \item Newton's second law {\scriptsize\color{PHDgray} (applied to fluid motion)}
-    \item {\scriptsize\color{PHDgray} Assumption that} [stress forces] = [viscous forces] + [pressure forces]
+  \alt<1-2>{
+    \begin{itemize}\itemsep0.9em
+    \item Resulting from
+      \begin{itemize}
+      \item Newton's second law {\scriptsize\color{PHDgray} (applied to fluid motion)}
+      \item {\scriptsize\color{PHDgray} Assumption that} [stress forces] = [viscous forces] + [pressure forces]
+      \end{itemize}
     \end{itemize}
-  \end{itemize}
-\alt<1>{ %<<<<<<<<<<<<<<<<<<1
-      \begin{block}{Equations in a domain $\Omega\subset\Rset^3$:}
-        \vspace{-1em}
-        \begin{align*}
-          \text{\tiny Horiz. $x$--momentum}\quad \dt u_1 + (u_1\dx + u_2\dy  + u_3 \dz) u_1 - \nu\Delta u_1 + \dx p &= f_1, \\
-          \text{\tiny Horiz. $y$--momentum}\quad\dt u_2 + (u_1\dx + u_2\dy  + u_3 \dz) u_2 - \nu\Delta u_2 + \dy p &= f_2, \\
-          \text{\tiny Vertical momentum}\quad\dt u_3 + (u_1\dx + u_2\dy  + u_3 \dz) u_3 - \nu\Delta u_3 + \dz p &= f_3, \\
-          \text{\tiny Continuity}\hspace{24ex} \dx u_1 + \dy u_2 + \dz u_3 &= 0
-        \end{align*}
-      \end{block}
-    }
-    { %<<<<<<<<<<<<<<<<<<2
-      \begin{block}
-      {Equations in a domain $\Omega\subset\Rset^3$ (\textbf{vector notation}):}
-        \vspace{-1em}
-        \begin{align*}
-          \text{\tiny Momentum}\quad \dt \uu + (\uu\cdot\grad) \uu - \framedmath<4>{\nu}\Delta \uu + \grad\pp &= \ff, \\
-          \text{\tiny Continuity}\hspace{21ex} \div\uu &= 0,
-        \end{align*}
-      \end{block}
-    }
-    \small
-    \begin{itemize}
-    \item<3> \alert{Boundary conditions} on $\partial\Omega$
+  }{}
+  \alt<1>{
+    \begin{block}{Equations in a domain $\Omega\subset\Rset^3$:}
+      \vspace{-1em}
+      \begin{align*}
+        \text{\tiny Horiz. $x$--momentum}\quad \dt u_1 + (u_1\dx + u_2\dy  + u_3 \dz) u_1 - \nu\Delta u_1 + \dx p &= f_1, \\
+        \text{\tiny Horiz. $y$--momentum}\quad\dt u_2 + (u_1\dx + u_2\dy  + u_3 \dz) u_2 - \nu\Delta u_2 + \dy p &= f_2, \\
+        \text{\tiny Vertical momentum}\quad\dt u_3 + (u_1\dx + u_2\dy  + u_3 \dz) u_3 - \nu\Delta u_3 + \dz p &= f_3, \\
+        \text{\tiny Continuity}\hspace{24ex} \dx u_1 + \dy u_2 + \dz u_3 &= 0
+      \end{align*}
+    \end{block}
+    \begin{itemize}\itemsep0.9em
+    \item \alert{Boundary conditions} on $\partial\Omega$
       (e.g. $\uu=(u_1,u_2,u_3)|_{\partial\Omega}=0$)
       \par And initial condition $\uu=\uu_0$.
-    \item<3> \alert{Hard problem} (wide range of
-      length scales, turbulence, non-lineality...). Millenium Prize
-      Problem (existence and smoothness).
-    \item<4> Easier if motion is slow so that \textbf{diffusion},
-      $\framedmath<4>{\nu}$, dominates (eg $Re=uL/\nu\ \tilde 1$)...
     \end{itemize}
+  }
+  { %<<<<<<<<<<<<<<<<<<2
+    \begin{block}
+      {Equations in a domain $\Omega\subset\Rset^3$: \uncover<2>{(\textbf{vector notation})}}
+      \vspace{-1em}
+      \begin{align*}
+        \text{\tiny Momentum}\quad \dt \uu +
+        \alt<2-3>{\tikz[na] \node(RconvectionNS) {\framedmath<3>{\uu(\uu\cdot\grad) \uu} };}
+        {\xcancel{\framedmath<3>{\uu(\uu\cdot\grad) \uu}}}
+        - \tikz[na] \node(RdiffusionNS) {\framedmath<4>{\nu}}; \Delta \uu + \grad\pp &= \ff,
+        \\
+        \text{\tiny Continuity}\hspace{21ex} \div\uu &= 0,
+      \end{align*}
+    \end{block}
+    \onslide<3->{
+      \begin{itemize}
+      \item \alert{Hard problem}
+        \begin{itemize}
+        \item Solutions present a wide range of length scales, turbulence,
+          non-lineality.... Millenium Prize Problem (existence and
+          smoothness).
+        \item Mathematical viewpoint: \textbf{non-linear} \tikz[na] \node(LconvectionNS) {\myframed<3>{convection}};
+          + diffusion
+        \item<4> Easier \alert{if motion is slow} so that diffusion, \tikz[na] \node(LdiffusionNS)
+          {$\framedmath<4>{\nu}$};, \textbf{dominates}, eg:
+          $$Re:=\frac{uL}{\nu} = \frac{\text{inertial forces}}{\text{viscous forces}} \enspace \sim \enspace 1$$
+        \end{itemize}
+      \end{itemize}
+    }
+  }
+
+  \begin{tikzpicture}[overlay]
+    \path<3>[myarrow]
+    (LconvectionNS) edge [out=90, in=270] (RconvectionNS);
+    \path<4>[myarrow]
+    (LdiffusionNS) edge [out=90, in=270] (RdiffusionNS);
+  \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Stokes Equations}
-%----------------------------------------------------------------------
-  They describe the motion of \textbf{viscous fluids}
-  \llaveizq{Velocity, $\uu=(u_1,u_2,u_3)$, \\ pressure $p$.}
-  \begin{itemize}\itemsep0.9em
-  \item
+\begin{frame}{Steady Stokes Equations}
+  % ----------------------------------------------------------------------
+  \begin{block}{}
+    \begin{tabular}{@{}l|>{$}r<{$}>{$}l<{$}@{}}
+      \multirow{3}{*}{
+      \begin{turn}{30}
+        \small \steadyStokes
+      \end{turn}
+      } &
+          -\Delta\uu + \grad p &= \ff \quad \text{in} \enspace \Omega,
+      \\[0.2em]&
+                 \div\uu &= 0 \quad \text{in} \enspace \Omega,
+      \\[0.2em]&
+                 \uu&=0 \quad \text{on} \enspace \partial\Omega.
+    \end{tabular}
+  \end{block}
+  \begin{theorem}
+    Let $\Omega$ be a regular open bounded connected domain in $\Rset^d$
+    ($d=1,2$ or $3$, in practice). Let $f \in L^2(\Omega)^d$.
+    \par\medskip
+    $\exists$ unique (weak) \textbf{solution}, $u\in H_0^1(\Omega)^d$ and $p\in L^2_0(\Omega)$, of \steadyStokes.
+    And it depends continuously on data $f$ (definition: \textbf{well-posedness}).
+  \end{theorem}
+  \medskip
+  \begin{scriptsize}
+    \hfill Where: \llaveizq{$H_0^1(\Omega) =$ Sobolev space with zero trace on $\partial\Omega$ and
+      \\[0.2em]
+      $L_0^2(\Omega) =\{ p\in L^2(\Omega)\ /\ \int_\Omega p = 0\}$.}
+  \end{scriptsize}
+  \bigskip
+
+  \textbf{Proof:}
+  Consequence of \textbf{saddle-point} theory on Hilbert spaces...
+  \par
+  \scriptsize\vfill\hfill $\star$ Another proof: (Lax-Milgram $\Rightarrow$
+  existence for $\uu$) \ + \ (de Rham Lemma $\Rightarrow$ existence for
+  $\pp$).
+\end{frame}
+
+\begin{frame}{Abstract Saddle Point Theory}
+  \begin{theorem}[saddle point]
+    Let \llaveizq{%
+      $V$ and $Q$ be Hilbert spaces,\\
+      $\alert{a}(\cdot,\cdot): V\times V \to \Rset$, \enskip
+      $\alert{b}(\cdot,\cdot):V\times Q \to \Rset$ \enskip\small
+      continuous bilinear forms.}
+    \vspace{+0.75em}
+    ~\par
+    Consider the ``\textit{saddle point}'' problem\vspace{-0.5em}
+    \begin{equation}
+      \tag{P}
+      \begin{split}
+        a(u,v) + b(v,p) &= \langle f, v \rangle_{V'\times V} \quad
+        \forall v\in V,
+        \\[0.2em]
+        b(u,q) &= \langle g, q \rangle_{Q'\times Q} \quad \forall q\in
+        Q.
+      \end{split}\label{eq:P}
+    \end{equation}
+    Suppose $\exists \alpha, \beta>0$ such that\vspace{-0.5em}
+    \begin{align*}
+      a(v,v) &\ge \alpha \|v\|_H^2 \enspace \forall v\in V \quad\text{(coercivity)} \quad\text{and}
+      \\[0.2em]
+      \sup_{\vv \in V}{\frac{b(\vv,\qq)}{\|v\|_{V}}} &\ge \beta\|q\| \quad \forall q\in Q\quad\text{(inf-sup condition)} .
+    \end{align*}
+    Then $\exists$ unique solution $(\uu,\pp)$ of (\ref{eq:P}) with continuous dependence on data.
+  \end{theorem}
+  \par
+  \hfill{\scriptsize $\star$ Coercivity hypothesis can be relaxed. Eg: it suffices $\forall v\in\mathop{ker}(B)$, $B:V\to Q'$, $Bv=b(v,\cdot)$.}
+\end{frame}
+
+\begin{frame}{Proof (Existence of solution for Steady Stokes)}
+  \begin{itemize}\itemsep1em
+  \item Let
+    \begin{equation*}
+      V = H_0^1(\Omega)^d, \qquad Q= L_0^2(\Omega).\label{eq:1}
+    \end{equation*}
+  \item Define
+    \begin{align*}
+    a(\uu,\vect{v})&=\int_\Omega \grad\uu \grad\vect{v}
+                     \qquad (\text{where}\enspace \grad\uu \grad\vect{v} := \sum_{i=1}^d \grad u_i \grad v_i),
+      \\
+    b(\uu,p)&=-\int_\Omega p\; \div\uu.
+    \end{align*}
+  \item Then hypothesis of saddle point theorem are verified
+    \par \hfill{\color{PHDgray} (inf-sup condition is not trivial!)}
+  \item[] $\Rightarrow$ $\exists$ unique solution of \steadyStokes.
   \end{itemize}
 \end{frame}
+
+\begin{frame}{Finite Elements for Stokes problem}
+  Let $\Th$ be a given triangulation, $k,k'\in \Nset$.
+  We define the following (conformal) finite element spaces:
+\begin{align*}
+  V_h &= \big\{ \vect{v}_h \in C(\overline\Omega)^d \ /\enspace \vect{v}|_{K_i}\in \P{k}^d,\enspace \forall K_i\in\Th,\enspace \vect{v}=0 \enspace \text{on  } \partial\Omega \big\} \subset V,
+  \\
+  Q_h &= \big\{ q_h \in C(\overline\Omega) \ /\enspace q|_{K_i}\in \P{k'},\enspace \forall K_i\in\Th,\enspace \int_\Omega q=0 \enspace \text{on  } \Omega \big\} \subset Q
+\end{align*}
+and the mixed variational problem:
+\begin{equation}
+  \tag{$P_h$}
+  \begin{split}
+    a(\uh,\vect{v}_h) + b(\vect{v}_h,\ph) &= \int_\Omega f v  \quad
+    \forall \vect{v}\in \Vh,
+    \\[0.2em]
+    b(\uh,\qh) &= 0  \quad \forall q\in \Qh.
+  \end{split}\label{eq:Ph}
+\end{equation}
+\alert{Well-posedness in $V$, $Q$ $\color{PHDred}\not\Rightarrow$ well-posedness in subspaces $\Vh$, $\Qh$} \exclamation\exclamation\exclamation
+\end{frame}
+
+\begin{frame}{Finite Elements for Stokes problem II}
+Well-posedness in $V$, $Q$ $\not\Rightarrow$ well-posedness in subspaces $\Vh$, $\Qh$ \exclamation\exclamation\exclamation
+
+\medskip
+
+Reason: Inf-sup condition in $V$, $Q$ $\color{PHDred}\not\Rightarrow$ \textbf{discrete inf-sup condition}:
+\begin{equation*}
+  \sup_{\vect{v}_h \in V_h}{\frac{b(\vect{v}_h,\qh)}{\|\vect{v}_h\|_{V}}} \ge \beta_h\|\qh\|_Q
+  \quad \forall \qh\in \Qh\quad \alert{(IS)_h}.
+\end{equation*}
+
+\medskip
+Task: to find finite elements verifying (discrete inf-sup).
+\medskip
+
+\begin{theorem}
+  \begin{itemize}\itemsep1em
+  \item \textbf{Taylor-Hood} elements $\P2/\P1$ ($k=2$, $k'=1$) verify
+    \alert{$(IS)_h$} and then the discrete problem~(\ref{eq:Ph}) is
+    well-posed.
+  \item \textbf{Bubble} elements $\P{1,b}/\P1$ ($k=1$ enriched by interior
+    ``bubbles'', $k'=1$) verify \alert{$(IS)_h$} and then~(\ref{eq:Ph}) is well-posed.
+  \end{itemize}
+\end{theorem}
+\end{frame}
+
 
 %%% Local Variables:
 %%% coding: utf-8
