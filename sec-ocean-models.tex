@@ -368,7 +368,7 @@
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{Hydrostatic Navier--Stokes (or Primitive) equations}
+\begin{frame}{Hydrostatic Navier--Stokes equations}
 %------------------------------------------------------------
   In practice, the simplification \framedmath{\varepsilon=0} is usually taken,
   obtaining:
@@ -393,7 +393,7 @@
     \label{eq:HNS.c}
   \end{tabular}
 \end{block}
-\begin{itemize}
+\begin{itemize}\itemsep1em
 \item Originally derived from scale analysis%~\cita{Pedlosky:1987,CushmanRoisin-Beckers:09}
 \item Mathematically justified as limit of anisotropic Navier--Stokes \aniNS,
   when $\varepsilon\to 0$ in vertical momentum
@@ -403,8 +403,66 @@
 % ~(\ref{eq:bc.1})--(\ref{eq:bc.3}). See that, now,
 %   it is natural not imposing boundary conditions for $\vv$ on
 %   $\talusBoundary$.
+\item Further simplifications lead to the \textbf{most popular models} in Oceanography:
+  \medskip
+  \begin{itemize}\itemsep0.6em
+  \item Shallow water (or Saint-Venant) equations
+  \item Primitive (vertically integrated) equations
+  \end{itemize}
 \end{itemize}
 \end{frame}
+
+\begin{frame}{A First Approach to Shallow Waters Equations}
+  \small
+  % A first approach: let us
+  % \medskip
+  \begin{itemize}
+  \item Consider a free surface on the sea, $z=h(x,y)$.
+  \item Define depth function $H(x,y):=h(x,y)-h_b(x,y)$ ($h_b=$bottom).
+  \item Suppose $u_1$ and $u_2$ don't depend on $z$ (vertical integration).
+  \item Suppose negligible viscosity (for simplicity).
+  \item We arrive to the following %  \textbf{Shallow
+    % waters} %equations, with unknowns $(u_1,u_2)$, $H$:
+  problem:
+    \begin{itemize}
+    \item find $\uu=(u_1,u_2):\domain\times (0,T) \to \Rset^2$ (horizontal
+      velocity) and
+    \item $H:\surface\times (0,T) \to\Rset$ (depth) such that
+    \end{itemize}
+  \end{itemize}
+    \begin{BlockNoTitle}
+      \begin{tabular}{@{}l|>{$}r<{$}>{$}l<{$}@{}}
+        \multirow{3}{*}{
+          \begin{turn}{30}
+            \small Shallow Waters
+          \end{turn}
+        }
+        & \dt u_1 +u_1 \dx u_1 + u_2 \dy u_1 = g \dx(H + h_b), &
+        \\[0.2em]
+        & \dt u_2 +u_1 \dx u_2 + u_2 \dy u_2 = g \dy(H + h_b), &
+        \\[0.2em]
+        & \dt H + \dx (u_1 \, H) + \dy (u_2 \, H) = 0.  &
+      \end{tabular}
+    \end{BlockNoTitle}
+      \begin{itemize}
+      \item Hyperbolic equations.\vspace{-1.0em}
+      \item Numerical approaches~\llaveizq{Finite Volumes,\\
+          Discontinuous Galerkin,\\ Stabilized Finite
+          Elements...}
+      \end{itemize}
+\end{frame}
+
+\begin{frame}{Shallow Waters (or Saint-Venant) Equations}
+    \PlayVideoWithLabel[0.9\linewidth][0.5\linewidth][Tsunami near ``Cabo de São Vicente'']{%
+      video/tsunami2.avi}
+    \small
+    \begin{itemize}
+    \item Artificial diffusion finite elements
+    \item Just qualitative, numerical simulation (\textbf{no validation with real data})
+    \item Although countries like Italy are using \textbf{tsunami models to protect their cities}
+    \end{itemize}
+\end{frame}
+
 
 % \begin{frame}{Vertical integration of Hydrostatic Navier--Stokes}
 %   \begin{itemize}
@@ -452,14 +510,17 @@
 % \end{frame}
 
 \begin{frame}{Vertical integration of Hydrostatic Navier--Stokes}
-  \begin{itemize}\itemsep0.77ex
+  \begin{itemize}\itemsep0.77em
   \item Widely studied \soften{(both theoretically and in numerical
     simulations)}
-  \item Almost all works \soften{use the following equivalent}
-    \textbf{\alert{vertical integrated formulation of the primitive
-        equations}}:
-    \begin{itemize}
-    \item find $\uu:\domain\times (0,T) \to \Rset^2$ (horizontal
+  \item It is obtained...
+    \begin{itemize}\itemsep0.33em
+    \item Using the \textbf{rigid lid hypothesis}
+    \item Integrating in $z$ the divergence equations in ~\hydNS
+    \end{itemize}
+  \item Problem:
+    \begin{itemize}\itemsep0.33em
+    \item find $\uu=(u_1,u_2):\domain\times (0,T) \to \Rset^2$ (horizontal
       velocity) and
     \item $\ps:\surface\times (0,T) \to\Rset$ (artificial surface
       pressure) such that
@@ -475,28 +536,24 @@
         \dt\uu + (\uu\cdot\gradx)\uu +\vv\dz \uu - \visc\Delta\uu +
         \gradx\ps = \ff & \In\domain,
         \label{eq:EP.a}
-        \\
+        \\[0.2em]
         &
         \divx\langle\uu\rangle = 0 & \In\domain,
         \label{eq:EP.b}
-        \\
+        \\[0.2em]
         &
         \uu = 0 \quad \On\bottomBoundary\cup\talusBoundary, \qquad
         \visc_z\dz\uu = \gs &\On \surfaceBoundary,
         \label{eq:EP.c}
       \end{tabular}
     \end{BlockNoTitle}
+    \small
     where $\vv$ and $\langle\uu\rangle$ are defined by:
     \vspace{-0.5em}
     $$
     \vv(\xx,\zz,t) = \int_z^0 \divx\uu(\xx,s,t)\;ds, \qquad
     \langle\uu\rangle(\xx,t) = \int_{-D(\xx)}^0 \uu(\xx,\zz,t) dz.
     $$
-  \item It is obtained...
-    \begin{itemize}
-    \item Integrating in $z$ the divergence equations in ~\hydNS
-    \item Using the \textbf{rigid lid hypothesis}
-    \end{itemize}
   \end{itemize}
 \end{frame}
 
